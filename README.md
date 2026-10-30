@@ -6,8 +6,8 @@ DNS race, MTU finder, route doctor and a bufferbloat test. Built with C# WPF on 
 ## Build on GitHub
 1. Create a repo and push this folder.
 2. Open the **Actions** tab. The `Build NovaNet` workflow runs on every push.
-3. Download the `NovaNet-win-x64` artifact. It is one self-contained `NovaNet.exe`.
-4. For a release, push a tag like `v1.0.0`; the exe is attached to the release.
+3. Download the `NovaNet-win-x64` artifact, unzip it anywhere, and run `NovaNet.exe` from inside that folder (keep the other files next to it).
+4. For a release, push a tag like `v1.0.0`; a zip is attached to the release.
 
 ## Run
 Right-click `NovaNet.exe`, run as administrator (it asks automatically).
