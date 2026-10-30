@@ -109,20 +109,20 @@ public sealed class DnsVm
 public sealed class Spark : FrameworkElement
 {
     public static readonly DependencyProperty ValuesProperty = DependencyProperty.Register(
-        nameof(Values), typeof(double[]), typeof(Spark),
+        nameof(Values), typeof(object), typeof(Spark),
         new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
     public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
         nameof(Stroke), typeof(Brush), typeof(Spark),
         new FrameworkPropertyMetadata(Brushes.Orange, FrameworkPropertyMetadataOptions.AffectsRender));
 
-    public double[]? Values { get => (double[]?)GetValue(ValuesProperty); set => SetValue(ValuesProperty, value); }
+    public object? Values { get => GetValue(ValuesProperty); set => SetValue(ValuesProperty, value); }
     public Brush Stroke { get => (Brush)GetValue(StrokeProperty); set => SetValue(StrokeProperty, value); }
 
     protected override void OnRender(DrawingContext dc)
     {
         double w = ActualWidth, h = ActualHeight;
-        var v = Values;
+        var v = Values as double[];
         if (v == null || v.Length < 2 || w < 4 || h < 4) return;
 
         var real = v.Where(d => !double.IsNaN(d)).ToList();
