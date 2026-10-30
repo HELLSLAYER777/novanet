@@ -19,21 +19,20 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Publish single-file exe
-        run: >
-          dotnet publish NovaNet.csproj -c Release -r win-x64 --self-contained true
-          -p:PublishSingleFile=true
-          -p:IncludeNativeLibrariesForSelfExtract=true
-          -p:EnableCompressionInSingleFile=true
-          -o out
+      - name: Publish (self-contained folder)
+        run: dotnet publish NovaNet.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=false -o out
 
       - uses: actions/upload-artifact@v4
         with:
           name: NovaNet-win-x64
-          path: out/NovaNet.exe
+          path: out/
+
+      - name: Zip for release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: Compress-Archive -Path out/* -DestinationPath NovaNet-win-x64.zip
 
       - name: Attach to release (tags only)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: out/NovaNet.exe
+          files: NovaNet-win-x64.zip
