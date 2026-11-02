@@ -199,7 +199,7 @@
                 <TextBlock Text="System Tweaks" FontWeight="SemiBold" FontSize="16"/>
                 <TextBlock Foreground="{StaticResource Muted}" Margin="0,4,0,0">
                     <TextBlock.Text>
-                      <MultiBinding StringFormat="{0} applied, {1} available">
+                      <MultiBinding StringFormat="{}{0} applied, {1} available">
                         <Binding Path="OptimizeVm.AppliedCount" />
                         <Binding Path="OptimizeVm.PendingCount" />
                       </MultiBinding>
