@@ -1,1 +1,69 @@
-﻿using System.Runtime.InteropServices;&#xA;using System.Windows;&#xA;using System.Windows.Interop;&#xA;using Microsoft.Extensions.DependencyInjection;&#xA;using NovaNet.Services;&#xA;using NovaNet.ViewModels;&#xA;&#xA;namespace NovaNet;&#xA;{&#xA;    public partial class MainWindow : Window&#xA;    {&#xA;        readonly TrayService _trayService;&#xA;        readonly MainViewModel _viewModel;&#xA;&#xA;        [DllImport("dwmapi.dll")]&#xA;        static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int value, int size);&#xA;&#xA;        public MainWindow(TrayService trayService, MainViewModel viewModel)&#xA;        {&#xA;            _trayService = trayService;&#xA;            _viewModel = viewModel;&#xA;            DataContext = _viewModel;&#xA;&#xA;            InitializeComponent();&#xA;&#xA;            SourceInitialized += (_, _) =>&#xA;            {&#xA;                int dark = 1; // dark title bar&#xA;                DwmSetWindowAttribute(new WindowInteropHelper(this).Handle, 20, ref dark, sizeof(int));&#xA;            };&#xA;&#xA;            Loaded += OnLoaded;&#xA;            Closed += OnClosed;&#xA;            StateChanged += OnStateChanged;&#xA;&#xA;            _trayService.SetMainWindow(this);&#xA;        }&#xA;&#xA;        void OnLoaded(object sender, RoutedEventArgs e)&#xA;        {&#xA;            // ViewModels handle their own initialization&#xA;        }&#xA;&#xA;        void OnStateChanged(object? sender, EventArgs e)&#xA;        {&#xA;            // Handled by TrayService&#xA;        }&#xA;&#xA;        void OnClosed(object? sender, EventArgs e)&#xA;        {&#xA;            _viewModel.Dispose();&#xA;        }&#xA;&#xA;        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)&#xA;        {&#xA;            var settings = App.Services.GetRequiredService<SettingsService>();&#xA;            if (settings.Settings.CloseToTray)&#xA;            {&#xA;                e.Cancel = true;&#xA;                Hide();&#xA;                WindowState = WindowState.Minimized;&#xA;            }&#xA;            else&#xA;            {&#xA;                base.OnClosing(e);&#xA;            }&#xA;        }&#xA;    }&#xA;}
+﻿using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Interop;
+using Microsoft.Extensions.DependencyInjection;
+using NovaNet.Services;
+using NovaNet.ViewModels;
+
+namespace NovaNet;
+{
+    public partial class MainWindow : Window
+    {
+        readonly TrayService _trayService;
+        readonly MainViewModel _viewModel;
+
+        [DllImport("dwmapi.dll")]
+        static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int value, int size);
+
+        public MainWindow(TrayService trayService, MainViewModel viewModel)
+        {
+            _trayService = trayService;
+            _viewModel = viewModel;
+            DataContext = _viewModel;
+
+            InitializeComponent();
+
+            SourceInitialized += (_, _) =>
+            {
+                int dark = 1; // dark title bar
+                DwmSetWindowAttribute(new WindowInteropHelper(this).Handle, 20, ref dark, sizeof(int));
+            };
+
+            Loaded += OnLoaded;
+            Closed += OnClosed;
+            StateChanged += OnStateChanged;
+
+            _trayService.SetMainWindow(this);
+        }
+
+        void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            // ViewModels handle their own initialization
+        }
+
+        void OnStateChanged(object? sender, EventArgs e)
+        {
+            // Handled by TrayService
+        }
+
+        void OnClosed(object? sender, EventArgs e)
+        {
+            _viewModel.Dispose();
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            var settings = App.Services.GetRequiredService<SettingsService>();
+            if (settings.Settings.CloseToTray)
+            {
+                e.Cancel = true;
+                Hide();
+                WindowState = WindowState.Minimized;
+            }
+            else
+            {
+                base.OnClosing(e);
+            }
+        }
+    }
+}
