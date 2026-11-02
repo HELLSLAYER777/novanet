@@ -118,7 +118,12 @@
     <!-- Page Content -->
     <Grid Grid.Row="1" Margin="16">
       <!-- LIVE PAGE -->
-      <Grid x:Name="PageLive" Visibility="{Binding CurrentPage, Converter={StaticResource EnumToBool}, ConverterParameter=Live, Converter={StaticResource BoolToVis}}">
+      <Grid x:Name="PageLive">
+        <Grid.Visibility>
+          <MultiBinding Converter="{StaticResource BoolToVis}">
+            <Binding Path="CurrentPage" Converter="{StaticResource EnumToBool}" ConverterParameter="Live" />
+          </MultiBinding>
+        </Grid.Visibility>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>
           <RowDefinition Height="*"/>
@@ -176,7 +181,12 @@
       </Grid>
 
       <!-- OPTIMIZE PAGE -->
-      <ScrollViewer x:Name="PageOptimize" Visibility="{Binding CurrentPage, Converter={StaticResource EnumToBool}, ConverterParameter=Optimize, Converter={StaticResource BoolToVis}}" VerticalScrollBarVisibility="Auto">
+      <ScrollViewer x:Name="PageOptimize" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer.Visibility>
+          <MultiBinding Converter="{StaticResource BoolToVis}">
+            <Binding Path="CurrentPage" Converter="{StaticResource EnumToBool}" ConverterParameter="Optimize" />
+          </MultiBinding>
+        </ScrollViewer.Visibility>
         <StackPanel>
           <Border Style="{StaticResource Card}" Padding="18,14" Margin="0,0,0,16">
             <Grid>
@@ -198,7 +208,12 @@
       </ScrollViewer>
 
       <!-- DNS PAGE -->
-      <ScrollViewer x:Name="PageDns" Visibility="{Binding CurrentPage, Converter={StaticResource EnumToBool}, ConverterParameter=Dns, Converter={StaticResource BoolToVis}}" VerticalScrollBarVisibility="Auto">
+      <ScrollViewer x:Name="PageDns" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer.Visibility>
+          <MultiBinding Converter="{StaticResource BoolToVis}">
+            <Binding Path="CurrentPage" Converter="{StaticResource EnumToBool}" ConverterParameter="Dns" />
+          </MultiBinding>
+        </ScrollViewer.Visibility>
         <StackPanel>
           <Border Style="{StaticResource Card}" Padding="18,14" Margin="0,0,0,16">
             <Grid>
@@ -236,7 +251,12 @@
       </ScrollViewer>
 
       <!-- NETWORK PAGE -->
-      <ScrollViewer x:Name="PageNet" Visibility="{Binding CurrentPage, Converter={StaticResource EnumToBool}, ConverterParameter=Net, Converter={StaticResource BoolToVis}}" VerticalScrollBarVisibility="Auto">
+      <ScrollViewer x:Name="PageNet" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer.Visibility>
+          <MultiBinding Converter="{StaticResource BoolToVis}">
+            <Binding Path="CurrentPage" Converter="{StaticResource EnumToBool}" ConverterParameter="Net" />
+          </MultiBinding>
+        </ScrollViewer.Visibility>
         <StackPanel>
           <Border Style="{StaticResource Card}" Padding="18,14" Margin="0,0,0,16">
             <Grid>
@@ -285,7 +305,12 @@
       </ScrollViewer>
 
       <!-- SPEED PAGE -->
-      <Grid x:Name="PageSpeed" Visibility="{Binding CurrentPage, Converter={StaticResource EnumToBool}, ConverterParameter=Speed, Converter={StaticResource BoolToVis}}">
+      <Grid x:Name="PageSpeed">
+        <Grid.Visibility>
+          <MultiBinding Converter="{StaticResource BoolToVis}">
+            <Binding Path="CurrentPage" Converter="{StaticResource EnumToBool}" ConverterParameter="Speed" />
+          </MultiBinding>
+        </Grid.Visibility>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>
           <RowDefinition Height="Auto"/>
@@ -349,7 +374,12 @@
       </Grid>
 
       <!-- GUIDE PAGE -->
-      <Grid x:Name="PageGuide" Visibility="{Binding CurrentPage, Converter={StaticResource EnumToBool}, ConverterParameter=Guide, Converter={StaticResource BoolToVis}}">
+      <Grid x:Name="PageGuide">
+        <Grid.Visibility>
+          <MultiBinding Converter="{StaticResource BoolToVis}">
+            <Binding Path="CurrentPage" Converter="{StaticResource EnumToBool}" ConverterParameter="Guide" />
+          </MultiBinding>
+        </Grid.Visibility>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>
           <RowDefinition Height="*"/>
